@@ -105,7 +105,7 @@ public abstract class Animal implements Entity, AnimalInfo {
 	void init(AnimalMapView regMngr) {
 		regionManager = regMngr;
 		if(pos == null) pos = Vector2D.getRandomVector(0, regionManager.getWidth() - 1, 0, regionManager.getHeight() - 1);
-		else if(!pos.isValid(regionManager.getWidth(), regionManager.getHeight())) pos = pos.adjust(regionManager.getWidth(), regionManager.getHeight());
+		else pos = pos.adjust(regionManager.getWidth(), regionManager.getHeight());
 		dest = Vector2D.getRandomVector(0, regionManager.getWidth() - 1, 0, regionManager.getHeight() - 1);
 	}
 	

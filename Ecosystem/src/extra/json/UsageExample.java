@@ -72,7 +72,7 @@ public class UsageExample {
 		// We put some keys with simple values into 'jo1'
 		jo1.put("a", 1234);
 		jo1.put("b", 123.3e-10);
-		jo1.put("c", "Hollaaa");
+		jo1.put("c", "Holaaa");
 
 		// We put an array into 'jo1', the elements of the array:
 		JSONArray ja = new JSONArray();
@@ -85,7 +85,7 @@ public class UsageExample {
 		JSONObject jo2 = new JSONObject();
 		// We put some keys with simple values into 'jo2', and the 'jo2' into 'jo1'
 		jo2.put("g", 1234);
-		jo2.put("h", "Hollaaa");
+		jo2.put("h", "Holaaa");
 		jo1.put("data", jo2);
 
 		// Print it

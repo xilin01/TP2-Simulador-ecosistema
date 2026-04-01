@@ -14,7 +14,7 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo {
 	}
 	
 	final void addAnimal(Animal a) {
-		animals.add(a);
+		if(!animals.contains(a)) animals.add(a);
 	}
 
 	final void removeAnimal(Animal a) {

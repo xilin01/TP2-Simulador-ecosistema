@@ -81,7 +81,7 @@ public class Controller {
 	private List<ObjInfo> toAnimalsInfo(List<? extends AnimalInfo> animals) {
 		List<ObjInfo> ol = new ArrayList<>(animals.size());
 		
-		for (AnimalInfo a: animals) ol.add(new ObjInfo(a.getGeneticCode(), (int) a.getPosition().getX(), (int) a.getPosition().getY(), (int) Math.round(a.getAge())+2));
+		for (AnimalInfo a: animals) ol.add(new ObjInfo(a.getGeneticCode(), (int)a.getPosition().getX(), (int)a.getPosition().getY(), (int)Math.round(a.getAge())+2));
 		return ol;
 	}
 }

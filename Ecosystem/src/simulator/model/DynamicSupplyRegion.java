@@ -12,7 +12,7 @@ public class DynamicSupplyRegion extends Region {
 	private double factor;
 	
 	public DynamicSupplyRegion(double food, double factor) {
-		if(food <= 0 || factor < 0) throw new IllegalArgumentException("Invalid arguments for DynamicSupplyRegion builder"); 
+		if(food < 0 || factor < 0) throw new IllegalArgumentException("Invalid arguments for DynamicSupplyRegion builder"); 
 		this.food = food;
 		this.factor = factor;
 	}

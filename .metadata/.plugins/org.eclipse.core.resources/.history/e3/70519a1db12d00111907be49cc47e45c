@@ -1,0 +1,28 @@
+package simulator.factories;
+
+import org.json.JSONObject;
+import simulator.model.DynamicSupplyRegion;
+import simulator.model.Region;
+
+public class DynamicSupplyRegionBuilder extends Builder<Region> {
+	private static final String TYPETAG = "dynamic";
+	private static final String DESC = "creates a DynamicSupplyRegion";
+	private final static double INIT_FOOD = 100.0;
+	private final static double FACTOR = 2.0;
+	
+	public DynamicSupplyRegionBuilder() {
+		super(TYPETAG, DESC);
+	}
+	
+	@Override
+	protected void fillInData(JSONObject jo) {
+		jo.put("factor", "double value of the factor to set (optional, if not specified it will use 2.0)");
+		jo.put("food", "double value of the food to set (optional, if not specified it will use 100.0)");
+	}
+
+	@Override
+	protected DynamicSupplyRegion createInstance(JSONObject data) {
+		if(data == null) throw new IllegalArgumentException("Invalid data for createInstance in DynamicSupplyRegionBuilder");
+		return new DynamicSupplyRegion(data.optDouble("food", INIT_FOOD), data.optDouble("factor", FACTOR));
+	}
+}

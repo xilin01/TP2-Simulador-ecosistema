@@ -30,8 +30,10 @@ public class Simulator implements JSONable {
 	}
 	
 	private void addAnimal(Animal a) {
-		animals.add(a);
-		regionManager.registerAnimal(a);
+		if(!animals.contains(a)) {
+			animals.add(a);
+			regionManager.registerAnimal(a);
+		}
 	}
 	
 	public void addAnimal(JSONObject aJson) {

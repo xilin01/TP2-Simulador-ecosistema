@@ -36,7 +36,7 @@ public abstract class AnimalBuilder extends Builder<Animal> {
 			JSONObject jo = data.getJSONObject("pos");
 			JSONArray ja1 = jo.getJSONArray("x_range"), ja2 = jo.getJSONArray("y_range");
 			
-			pos = Vector2D.getRandomVector(ja1.getDouble(0), ja1.getDouble(1), ja2.getDouble(0), ja2.getDouble(1));
+			if(ja1.length() == 2 && ja2.length() == 2) pos = Vector2D.getRandomVector(ja1.getDouble(0), ja1.getDouble(1), ja2.getDouble(0), ja2.getDouble(1));
 		}
 		return newInstance(data, mateStrategy, pos);
 	}

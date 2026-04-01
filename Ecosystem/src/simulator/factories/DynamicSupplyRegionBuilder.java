@@ -22,7 +22,8 @@ public class DynamicSupplyRegionBuilder extends Builder<Region> {
 
 	@Override
 	protected DynamicSupplyRegion createInstance(JSONObject data) {
-		if(data == null) throw new IllegalArgumentException("Invalid data for createInstance in DynamicSupplyRegionBuilder");
+		if(data == null || data.optDouble("food", INIT_FOOD) < 0 || data.optDouble("factor", FACTOR) < 0) 
+			throw new IllegalArgumentException("Invalid data for createInstance in DynamicSupplyRegionBuilder");
 		return new DynamicSupplyRegion(data.optDouble("food", INIT_FOOD), data.optDouble("factor", FACTOR));
 	}
 }
