@@ -27,7 +27,7 @@ public abstract class Builder<T> {
 		return info;
 	}
 
-	protected void fillInData(JSONObject jo) {  
+	protected void fillInData(JSONObject jo) {
 	}
 
 	@Override  

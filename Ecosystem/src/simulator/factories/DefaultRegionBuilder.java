@@ -6,7 +6,7 @@ import simulator.model.Region;
 
 public class DefaultRegionBuilder extends Builder<Region> {
 	private static final String TYPETAG = "default";
-	private static final String DESC = "creates a DefaultRegion";
+	private static final String DESC = "Infinite food supply";
 	
 	public DefaultRegionBuilder() {
 		super(TYPETAG, DESC);

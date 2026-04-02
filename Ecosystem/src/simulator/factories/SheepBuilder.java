@@ -16,7 +16,7 @@ public class SheepBuilder extends AnimalBuilder {
 
 	@Override
 	protected void fillInDangerStrategy(JSONObject jo) {
-		jo.put("danger_strategy", "JSONOject description of the selection strategy to build (optional, if not specified it will use the SelectFirst selection strategy)");		
+		jo.put("danger_strategy", "JSONOject description of the danger selection strategy to build (optional, default SelectFirst)");		
 	}
 
 	@Override

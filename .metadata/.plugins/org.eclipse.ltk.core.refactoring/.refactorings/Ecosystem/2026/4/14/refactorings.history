@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;toolaBar&apos; in &apos;simulator.view.ControlPanel&apos; to &apos;toolBar&apos;&#x0D;&#x0A;- Original project: &apos;Ecosystem&apos;&#x0D;&#x0A;- Original element: &apos;simulator.view.ControlPanel.toolaBar&apos;&#x0D;&#x0A;- Renamed element: &apos;simulator.view.ControlPanel.toolBar&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;toolaBar&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;simulator.view{ControlPanel.java[ControlPanel^toolaBar" name="toolBar" references="true" setter="false" stamp="1775075904824" textual="false" version="1.0"/>
+</session>

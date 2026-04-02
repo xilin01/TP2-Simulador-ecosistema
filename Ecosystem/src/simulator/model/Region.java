@@ -33,6 +33,11 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo {
 		}
 		return n;
 	}
+	
+	@Override
+	public List<AnimalInfo> getAnimalsInfo() {  
+		return new ArrayList<>(animals);
+	}
 
 	@Override
 	public JSONObject asJSON() {
@@ -41,4 +46,6 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo {
 		for(Animal a: animals) ja.put(a.asJSON());
 		return new JSONObject().put("animals", ja);
 	}
+	
+	abstract public String toString();
 }

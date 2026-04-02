@@ -2,6 +2,7 @@ package simulator.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -127,6 +128,31 @@ public class RegionManager implements AnimalMapView {
 			}
 		}
 		return aux;
+	}
+	
+	@Override
+	public Iterator<RegionData> iterator() {
+		return new Iterator<RegionData>() {
+			private int currentRow = 0;
+			private int currentCol = 0;
+
+			@Override
+			public boolean hasNext() {
+				return currentRow < rows;
+			}
+
+			@Override
+			public RegionData next() {
+				RegionData regionData = new RegionData(currentRow, currentCol, regions[currentRow][currentCol]);
+				
+				currentCol++;
+				if (currentCol >= cols) {
+					currentCol = 0;
+					currentRow++;
+				}
+				return regionData;
+			}
+		};
 	}
 	
 	@Override

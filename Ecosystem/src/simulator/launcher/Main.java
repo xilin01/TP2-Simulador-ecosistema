@@ -55,11 +55,11 @@ public class Main {
 	}
 	
 	// Default values for some parameters
-	private final static Double DEFAULT_DELTA_TIME = 0.03; // in seconds
+	public final static Double DEFAULT_DELTA_TIME = 0.03; // in seconds
 	private final static Double DEFAULT_TIME = 10.0; // in seconds
 	
 	// Some attributes to stores values corresponding to command-line parameters
-	private static Double deltaTime = null;
+	public static Double deltaTime = null;
 	private static String inFile = null;
 	private static String outFile = null;
 	private static Boolean simpleViewer = false;
@@ -67,8 +67,8 @@ public class Main {
 	private static ExecMode mode = ExecMode.BATCH;
 	
 	// Factories
-	private static Factory<Animal> animalsFactory;
-	private static Factory<Region> regionsFactory;
+	public static Factory<Animal> animalsFactory;
+	public static Factory<Region> regionsFactory;
 
 	private static void parseArgs(String[] args) {
 		Options cmdLineOptions = buildOptions(); // Define the valid command line options
@@ -182,10 +182,10 @@ public class Main {
 		JSONObject jo = loadJSONFile(is);
 		OutputStream os = outFile != null ? new FileOutputStream(new File(outFile)) : System.out;
 		Simulator sim = new Simulator(jo.getInt("cols"), jo.getInt("rows"), jo.getInt("width"), jo.getInt("height"), animalsFactory, regionsFactory);
-		Controller c = new Controller(sim);
+		Controller ctrl = new Controller(sim);
 		
-		c.loadData(jo);
-		c.run(time, deltaTime, simpleViewer, os);
+		ctrl.loadData(jo);
+		ctrl.run(time, deltaTime, simpleViewer, os);
 		os.close();
 	}
 

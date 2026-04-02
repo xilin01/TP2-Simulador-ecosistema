@@ -20,7 +20,7 @@ public class WolfBuilder extends AnimalBuilder {
 
 	@Override
 	protected void fillInHuntStrategy(JSONObject jo) {
-		jo.put("hunt_strategy", "JSONOject description of the selection strategy to build (optional, if not specified it will use the SelectFirst selection strategy)");
+		jo.put("hunt_strategy", "JSONOject description of the hunt selection strategy to build (optional, default SelectFirst)");
 	}
 	
 	@Override

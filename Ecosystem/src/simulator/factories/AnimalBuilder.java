@@ -17,14 +17,14 @@ public abstract class AnimalBuilder extends Builder<Animal> {
 
 	@Override
 	protected void fillInData(JSONObject jo) {
-		jo.put("mate_strategy", "JSONOject description of the selection strategy to build (optional, if not specified it will use the SelectFirst selection strategy)");
+		jo.put("mate_strategy", "JSONOject description of the mate selection strategy to build (optional, default SelectFirst)");
 		fillInDangerStrategy(jo);
 		fillInHuntStrategy(jo);
 		JSONObject aux = new JSONObject();
 		aux.put("x_range", "JSONArray description of the range of values [a, b] where the x coordinate will be randomly set");
 		aux.put("y_range", "JSONArray description of the range of values [a, b] where the y coordinate will be randomly set");
 		jo.put("pos*", aux);
-		jo.put("*", "JSONObject description of the position range (optional, if not specified it will use null)");
+		jo.put("*", "JSONObject description of the position range (optional, default null)");
 	}
 	
 	@Override

@@ -1,0 +1,59 @@
+package simulator.view;
+
+import java.awt.BorderLayout;
+
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+
+import simulator.control.Controller;
+
+@SuppressWarnings("serial")
+class ControlPanel extends JPanel {
+	private Controller ctrl;
+	private ChangeRegionsDialog changeRegionsDialog;
+	private JToolBar toolBar;
+	private JFileChooser fileChooser;
+	private boolean stopped = true;
+	private JButton quitButton;
+	// TODO añade más atributos aquí
+
+	ControlPanel(Controller ctrl) {
+		this.ctrl = ctrl;
+		initGUI();
+	}
+
+	private void initGUI() {
+		setLayout(new BorderLayout());
+	    toolBar = new JToolBar();
+	    add(toolBar, BorderLayout.PAGE_START);
+
+	    // TODO crear los diferentes botones/atributos y añadirlos a la toolBar.
+	    //      Todos ellos han de tener su correspondiente tooltip. Puedes utilizar  
+	    //      this.toolaBar.addSeparator() para añadir la línea de separación vertical  
+	    //      entre las componentes que lo necesiten.  
+
+	    // Quit Button  
+	    this.toolBar.add(Box.createGlue()); // This aligns the button to the right
+	    this.toolBar.addSeparator();
+	    this.quitButton = new JButton();
+	    this.quitButton.setToolTipText("Quit");
+	    this.quitButton.setIcon(new ImageIcon("resources/icons/exit.png"));
+	    this.quitButton.addActionListener(e -> ViewUtils.quit(this));
+	    this.toolBar.add(quitButton);
+
+	    // TODO Inicializar this.fc con una instancia de JFileChooser. Para que siempre  
+	    // abre en la carpeta de ejemplos puedes usar:  
+	    //  
+	    //   this.fc.setCurrentDirectory(new File(System.getProperty("user.dir") + "/resources/examples"));
+	   
+	    // TODO Inicializar this.changeRegionsDialog con instancias del diálogo de cambio   
+	    // de regiones   
+
+	}   
+	
+	// TODO el resto de métodos van aquí…
+}

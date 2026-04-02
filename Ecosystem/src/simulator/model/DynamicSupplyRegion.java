@@ -29,4 +29,9 @@ public class DynamicSupplyRegion extends Region {
 	public void update(double dt) {
 		if(Utils.RAND.nextDouble() <= FOOD_INCREASE_PROBABILITY) food += dt * factor;
 	}
+	
+	@Override
+	public String toString() {
+		return "dynamic";
+	}
 }

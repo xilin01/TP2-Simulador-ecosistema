@@ -6,7 +6,7 @@ import simulator.model.Region;
 
 public class DynamicSupplyRegionBuilder extends Builder<Region> {
 	private static final String TYPETAG = "dynamic";
-	private static final String DESC = "creates a DynamicSupplyRegion";
+	private static final String DESC = "Dynamic food supply";
 	private final static double INIT_FOOD = 100.0;
 	private final static double FACTOR = 2.0;
 	
@@ -16,8 +16,8 @@ public class DynamicSupplyRegionBuilder extends Builder<Region> {
 	
 	@Override
 	protected void fillInData(JSONObject jo) {
-		jo.put("factor", "double value of the factor to set (optional, if not specified it will use 2.0)");
-		jo.put("food", "double value of the food to set (optional, if not specified it will use 100.0)");
+		jo.put("factor", "food increase factor (optional, default 2.0)");
+		jo.put("food", "initial amount of food (optional, default 100.0)");
 	}
 
 	@Override
