@@ -45,9 +45,9 @@ class ControlPanel extends JPanel {
 	}
 
 	private void initGUI() {
-		setLayout(new BorderLayout());
+		super.setLayout(new BorderLayout());
 		toolBar = new JToolBar();
-		add(toolBar, BorderLayout.PAGE_START);
+		super.add(toolBar, BorderLayout.PAGE_START);
 
 		fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir") + "/resources/examples"));

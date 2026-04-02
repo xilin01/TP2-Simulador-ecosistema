@@ -1,0 +1,99 @@
+package simulator.view;
+
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
+
+import simulator.control.Controller;
+import simulator.model.AnimalInfo;
+import simulator.model.EcoSysObserver;
+import simulator.model.MapInfo;
+import simulator.model.RegionInfo;
+
+@SuppressWarnings("serial")
+class StatusBar extends JPanel implements EcoSysObserver {
+	private JLabel timeLabel;
+	private JLabel totalAnimalsLabel;
+	private JLabel dimensionLabel;
+
+	StatusBar(Controller ctrl) {
+		initGUI();
+		ctrl.addObserver(this);
+	}
+
+	private void initGUI() {
+		// Usamos un FlowLayout alineado a la izquierda para poner las etiquetas seguidas
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// Un borde biselado suele quedar bien para las barras de estado (abajo del todo)
+		this.setBorder(BorderFactory.createBevelBorder(1));
+
+		// 1. Etiqueta para el Tiempo
+		timeLabel = new JLabel("Time: 0.000");
+		timeLabel.setPreferredSize(new Dimension(150, 20));
+		this.add(timeLabel);
+
+		this.add(createSeparator());
+
+		// 2. Etiqueta para el Total de Animales
+		totalAnimalsLabel = new JLabel("Total Animals: 0");
+		totalAnimalsLabel.setPreferredSize(new Dimension(150, 20));
+		this.add(totalAnimalsLabel);
+
+		this.add(createSeparator());
+
+		// 3. Etiqueta para las Dimensiones del Mapa
+		dimensionLabel = new JLabel("Dimension: N/A");
+		dimensionLabel.setPreferredSize(new Dimension(150, 20));
+		this.add(dimensionLabel);
+	}
+
+	// Método auxiliar para crear separadores verticales
+	private JSeparator createSeparator() {
+		JSeparator sep = new JSeparator(JSeparator.VERTICAL);
+		sep.setPreferredSize(new Dimension(10, 20));
+		return sep;
+	}
+
+	// Método auxiliar para actualizar los textos de forma thread-safe
+	private void updateInfo(double time, MapInfo map, List<AnimalInfo> animals) {
+		SwingUtilities.invokeLater(() -> {
+			timeLabel.setText(String.format("Time: %.3f", time));
+			totalAnimalsLabel.setText("Total Animals: " + animals.size());
+			if (map != null) {
+				dimensionLabel.setText(String.format("Dimension: %dx%d", map.getWidth(), map.getHeight()));
+			}
+		});
+	}
+	
+	@Override
+	public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
+		updateInfo(time, map, animals);
+	}
+
+	@Override
+	public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
+		updateInfo(time, map, animals);
+	}
+
+	@Override
+	public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
+		updateInfo(time, map, animals);
+	}
+
+	@Override
+	public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
+		// En principio, establecer una región no cambia el tiempo ni las dimensiones,
+		// pero si fuera necesario se podría actualizar aquí también.
+	}
+
+	@Override
+	public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
+		updateInfo(time, map, animals);
+	}
+}

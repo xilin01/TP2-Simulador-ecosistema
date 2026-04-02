@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BoxLayout;
@@ -19,8 +20,8 @@ public class MainWindow extends JFrame {
 	}
 	
 	private void initGUI() {
-	    JPanel mainPanel = new JPanel(new BorderLayout());
-	    setContentPane(mainPanel);
+		JPanel mainPanel = new JPanel(new BorderLayout());
+	    super.setContentPane(mainPanel);
 
 	    ControlPanel controlPanel = new ControlPanel(ctrl);
 	    mainPanel.add(controlPanel, BorderLayout.PAGE_START);
@@ -31,21 +32,21 @@ public class MainWindow extends JFrame {
 	    JPanel contentPanel = new JPanel();
 	    contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 	    mainPanel.add(contentPanel, BorderLayout.CENTER);
-	    
-	    // TODO crear la tabla de especies y añadirla a contentPanel.
-	    //      Usa setPreferredSize(new Dimension(500, 250)) para fijar su tamaño
+	    InfoTable speciesTable = new InfoTable("Species", new SpeciesTableModel(ctrl));
+	    speciesTable.setPreferredSize(new Dimension(500, 250));
+	    contentPanel.add(speciesTable);
+	    InfoTable regionsTable = new InfoTable("Regions", new RegionsTableModel(ctrl));
+	    regionsTable.setPreferredSize(new Dimension(500, 250));
+	    contentPanel.add(regionsTable);
 
-	    // TODO crear la tabla de regiones.
-	    //      Usa setPreferredSize(new Dimension(500, 250)) para fijar su tamaño
-
-	    addWindowListener(new WindowAdapter() {
+	    super.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				ViewUtils.quit(MainWindow.this);
 			}
 		});
-	    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	    pack();
-	    setVisible(true);
+	    super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+	    super.pack();
+	    super.setVisible(true);
 	}
 }

@@ -1,11 +1,13 @@
 package simulator.view;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
-
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 import simulator.control.Controller;
 import simulator.model.AnimalInfo;
 import simulator.model.EcoSysObserver;
@@ -14,55 +16,67 @@ import simulator.model.RegionInfo;
 
 @SuppressWarnings("serial")
 class StatusBar extends JPanel implements EcoSysObserver {
-	// TODO Añadir los atributos necesarios.  
+	private JLabel timeLabel;
+	private JLabel totalAnimalsLabel;
+	private JLabel dimensionLabel;
 
-	StatusBar(Controller ctrl) {  
-	    initGUI();
-	    // TODO registrar this como observador  
+	StatusBar(Controller ctrl) {
+		initGUI();
+		ctrl.addObserver(this);
 	}
 
-	private void initGUI() {  
-	    this.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    this.setBorder(BorderFactory.createBevelBorder(1));
+	private void initGUI() {
+		super.setLayout(new FlowLayout(FlowLayout.LEFT));
+		super.setBorder(BorderFactory.createBevelBorder(1));
+		
+		timeLabel = new JLabel("Time: 0.000");
+		super.add(timeLabel);
+		addSeparator();
 
-	    // TODO Crear varios JLabel para el tiempo, el número de animales, y la
-	    //      dimensión y añadirlos al panel. Puedes utilizar el siguiente código
-	    //      para añadir un separador vertical:  
-	    //
-	    //     JSeparator s = new JSeparator(JSeparator.VERTICAL);  
-	    //     s.setPreferredSize(new Dimension(10, 20));  
-	    //     this.add(s);  
+		totalAnimalsLabel = new JLabel("Total Animals: 0");
+		super.add(totalAnimalsLabel);
+		addSeparator();
+
+		dimensionLabel = new JLabel("Dimension: n/a");
+		super.add(dimensionLabel);
+	}
+
+	private void addSeparator() {
+		JSeparator s = new JSeparator(JSeparator.VERTICAL);
+		
+		s.setPreferredSize(new Dimension(10, 20));
+		super.add(s);
 	}
 
 	@Override
 	public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		
+		update(time, map, animals);
+	}
+	
+	private void update(double time, MapInfo map, List<AnimalInfo> animals) {
+		SwingUtilities.invokeLater(() -> {
+			timeLabel.setText(String.format("Time: %.3f", time));
+			totalAnimalsLabel.setText("Total Animals: " + animals.size());
+			dimensionLabel.setText("Dimension: " + map.getWidth() + "x" + map.getHeight() + " " + map.getRows() + "x" + map.getCols());
+		});
 	}
 
 	@Override
 	public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		
+		update(time, map, animals);
 	}
 
 	@Override
 	public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		// TODO Auto-generated method stub
-		
+		update(time, map, animals);
 	}
 
 	@Override
 	public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
-		// TODO Auto-generated method stub
-		
+		update(time, map, animals);
 	}
-
-	// TODO el resto de métodos van aquí…  
 }
