@@ -29,7 +29,7 @@ public abstract class Region implements Entity, FoodSupplier, RegionInfo {
 		int n = 0;
 		
 		for(Animal a: animals) {
-			if(a.getDiet() == Diet.HERBIVORE) n++;
+			if(a.getDiet() == Animal.Diet.HERBIVORE) n++;
 		}
 		return n;
 	}

@@ -28,7 +28,7 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 
 	@Override  
 	public T createInstance(JSONObject info) {  
-		if (info == null) throw new IllegalArgumentException("’info’ cannot be null");
+		if(info == null) throw new IllegalArgumentException("’info’ cannot be null");
 		if(builders.containsKey(info.getString("type"))) {
 			T t = builders.get(info.getString("type")).createInstance(info.has("data") ? info.getJSONObject("data") : new JSONObject());
 			

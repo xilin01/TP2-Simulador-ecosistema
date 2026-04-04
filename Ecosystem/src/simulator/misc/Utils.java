@@ -12,7 +12,7 @@ public class Utils {
 	}
 
 	public static double getRandomizedParameter(double value, double tolerance) {
-		assert (tolerance > 0 && tolerance <= 1);
+		assert(tolerance > 0 && tolerance <= 1);
 		double t = (RAND.nextDouble() - 0.5) * 2 * tolerance;
 		return value * (1 + t);
 	}

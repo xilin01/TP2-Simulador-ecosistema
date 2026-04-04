@@ -11,8 +11,8 @@ class ViewUtils {
 	static Frame getWindow(Component c) {
 		Frame w = null;
 		
-		if (c != null) {
-			if (c instanceof Frame) w = (Frame)c;
+		if(c != null) {
+			if(c instanceof Frame) w = (Frame)c;
 			else w = (Frame)SwingUtilities.getWindowAncestor(c);
 		}
 		return w;
@@ -32,7 +32,7 @@ class ViewUtils {
 	static void quit(Component c) {
 		int n = JOptionPane.showOptionDialog(getWindow(c), "Are sure you want to quit?", "Quit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-		if (n == 0) System.exit(0);
+		if(n == 0) System.exit(0);
 	}
 
 	// Convert the hash code of 's' to a Color.

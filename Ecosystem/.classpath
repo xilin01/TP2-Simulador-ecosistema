@@ -6,6 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="lib" path="C:/Users/xiang/Downloads/TP2/Simulador-ecosistema/Ecosystem/lib/commons-cli-1.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/xiang/Downloads/TP2/Simulador-ecosistema/Ecosystem/lib/json.jar"/>
 	<classpathentry kind="lib" path="C:/Users/xiang/Downloads/TP2/Simulador-ecosistema/Ecosystem/lib/viewer.jar"/>

@@ -19,7 +19,7 @@ public class DynamicSupplyRegion extends Region {
 
 	@Override
 	public double getFood(AnimalInfo a, double dt) {
-		double food = a.getDiet() == Diet.CARNIVORE ? 0 : Math.min(this.food,FOOD_EAT_RATE_HERBS*Math.exp(-Math.max(0,countHerbivores()-FOOD_SHORTAGE_TH_HERBS)*FOOD_SHORTAGE_EXP_HERBS)*dt);
+		double food = a.getDiet() == Animal.Diet.CARNIVORE ? 0 : Math.min(this.food,FOOD_EAT_RATE_HERBS*Math.exp(-Math.max(0,countHerbivores()-FOOD_SHORTAGE_TH_HERBS)*FOOD_SHORTAGE_EXP_HERBS)*dt);
 		
 		this.food -= food;
 		return food;

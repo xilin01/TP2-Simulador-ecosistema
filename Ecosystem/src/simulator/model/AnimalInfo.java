@@ -1,6 +1,8 @@
 package simulator.model;
 
 import simulator.misc.Vector2D;
+import simulator.model.Animal.Diet;
+import simulator.model.Animal.State;
 
 public interface AnimalInfo extends JSONable {
 	

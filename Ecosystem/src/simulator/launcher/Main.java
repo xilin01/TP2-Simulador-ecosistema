@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -32,6 +33,7 @@ import simulator.model.Animal;
 import simulator.model.Region;
 import simulator.model.SelectionStrategy;
 import simulator.model.Simulator;
+import simulator.view.MainWindow;
 
 public class Main {
 	private enum ExecMode {
@@ -52,11 +54,19 @@ public class Main {
 		public String getDesc() {
 			return desc;
 		}
+		
+	    public static ExecMode parseExecMode(String s) throws ParseException {
+	        for(ExecMode mode: ExecMode.values()) {
+	            if(mode.tag.equals(s)) return mode;
+	        }
+	        throw new ParseException("Invalid value for mode: " + s);
+	    }
 	}
 	
 	// Default values for some parameters
 	public final static Double DEFAULT_DELTA_TIME = 0.03; // in seconds
 	private final static Double DEFAULT_TIME = 10.0; // in seconds
+	private final static ExecMode DEFAULT_MODE = ExecMode.GUI;
 	
 	// Some attributes to stores values corresponding to command-line parameters
 	public static Double deltaTime = null;
@@ -64,7 +74,7 @@ public class Main {
 	private static String outFile = null;
 	private static Boolean simpleViewer = false;
 	private static Double time = null;
-	private static ExecMode mode = ExecMode.BATCH;
+	private static ExecMode mode = null;
 	
 	// Factories
 	public static Factory<Animal> animalsFactory;
@@ -80,19 +90,20 @@ public class Main {
 			parseDeltaTimeOption(line);
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
+			parseModeOption(line);
 			parseOutFileOption(line);
 			parseSimpleViewerOption(line);
 			parseTimeOption(line);
 			// If there are some remaining arguments, then something wrong is provided in the command line!
 			String[] remaining = line.getArgs();
-			if (remaining.length > 0) {
+			if(remaining.length > 0) {
 				String error = "Illegal arguments:";
 				
-				for (String o: remaining) error += (" " + o);
+				for(String o: remaining) error += (" " + o);
 				throw new ParseException(error);
 			}
-		} 
-		catch (ParseException e) {
+		}
+		catch(ParseException e) {
 			System.err.println(e.getLocalizedMessage());
 			System.exit(1);
 		}
@@ -105,6 +116,9 @@ public class Main {
 				.desc("A double representing actual time, in seconds, per simulation step. Default value: " + DEFAULT_DELTA_TIME + ".").build()); // Delta time
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message.").build()); // Help
 		cmdLineOptions.addOption(Option.builder("i").longOpt("input").hasArg().desc("Initial configuration file.").build()); // Input file
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg()
+				.desc("Execution Mode. Possible values: '" + ExecMode.BATCH.getTag() + "' (" + ExecMode.BATCH.getDesc() + "), '"
+						+ ExecMode.GUI.getTag() + "' (" + ExecMode.GUI.getDesc() + "). Default value: '" + DEFAULT_MODE.getTag() + "'.").build()); // Mode
 		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg().desc("Output file, where output is written.").build()); // Output file
 		cmdLineOptions.addOption(Option.builder("sv").longOpt("simple-viewer").desc("Show the viewer window in console mode.").build()); // Simple viewer
 		cmdLineOptions.addOption(Option.builder("t").longOpt("time").hasArg()
@@ -125,13 +139,13 @@ public class Main {
 			assert(time >= 0);
 			return time;
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			throw new ParseException("Invalid value for " + longOpt + ": " + t);
 		}
 	}
 
 	private static void parseHelpOption(CommandLine line, Options cmdLineOptions) {
-		if (line.hasOption("h")) {
+		if(line.hasOption("h")) {
 			HelpFormatter formatter = new HelpFormatter();
 			
 			formatter.printHelp(Main.class.getCanonicalName(), cmdLineOptions, true);
@@ -141,7 +155,11 @@ public class Main {
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
 		inFile = line.getOptionValue("i");
-		if (mode == ExecMode.BATCH && inFile == null) throw new ParseException("In batch mode an input configuration file is required");
+		if(mode == ExecMode.BATCH && inFile == null) throw new ParseException("In batch mode an input configuration file is required");
+	}
+	
+	private static void parseModeOption(CommandLine line) throws ParseException {
+		mode = ExecMode.parseExecMode(line.getOptionValue("m", DEFAULT_MODE.getTag()));
 	}
 	
 	private static void parseOutFileOption(CommandLine line) {
@@ -178,8 +196,7 @@ public class Main {
 	}
 
 	private static void startBatchMode() throws Exception {
-		InputStream is = new FileInputStream(new File(inFile));
-		JSONObject jo = loadJSONFile(is);
+		JSONObject jo = loadJSONFile(new FileInputStream(new File(inFile)));
 		OutputStream os = outFile != null ? new FileOutputStream(new File(outFile)) : System.out;
 		Simulator sim = new Simulator(jo.getInt("cols"), jo.getInt("rows"), jo.getInt("width"), jo.getInt("height"), animalsFactory, regionsFactory);
 		Controller ctrl = new Controller(sim);
@@ -190,19 +207,20 @@ public class Main {
 	}
 
 	private static void startGUIMode() throws Exception {
-		throw new UnsupportedOperationException("GUI mode is not ready yet...");
+		JSONObject jo = inFile != null ? loadJSONFile(new FileInputStream(new File(inFile))) : new JSONObject();
+		Simulator sim = new Simulator(jo.optInt("cols", 20), jo.optInt("rows", 15), jo.optInt("width", 800), jo.optInt("height", 600), animalsFactory, regionsFactory);
+		Controller ctrl = new Controller(sim);
+		
+		if(inFile != null) ctrl.loadData(jo);
+		SwingUtilities.invokeAndWait(() -> new MainWindow(ctrl));
 	}
 
 	private static void start(String[] args) throws Exception {
 		initFactories();
 		parseArgs(args);
-		switch (mode) {
-		case BATCH:
-			startBatchMode();
-			break;
-		case GUI:
-			startGUIMode();
-			break;
+		switch(mode) {
+			case BATCH: startBatchMode(); break;
+			case GUI: startGUIMode(); break;
 		}
 	}
 
@@ -211,7 +229,7 @@ public class Main {
 		try {
 			start(args);
 		}
-		catch (Exception e) {
+		catch(Exception e) {
 			System.err.println("Something went wrong...");
 			System.err.println();
 			e.printStackTrace();

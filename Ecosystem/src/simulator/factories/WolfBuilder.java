@@ -26,7 +26,7 @@ public class WolfBuilder extends AnimalBuilder {
 	@Override
 	protected Wolf createInstance(JSONObject data) {
 		if(data == null) throw new IllegalArgumentException("Invalid data for createInstance in WolfBuilder");
-		return (Wolf) super.createInstance(data);
+		return (Wolf)super.createInstance(data);
 	}
 
 	@Override

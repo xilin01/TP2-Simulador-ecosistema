@@ -5,6 +5,9 @@ import simulator.misc.Utils;
 import simulator.misc.Vector2D;
 
 public abstract class Animal implements Entity, AnimalInfo {
+	public enum Diet {CARNIVORE, HERBIVORE;}
+	public enum State {NORMAL, MATE, HUNGER, DANGER, DEAD;}
+	
 	final static double INIT_ENERGY = 100.0;
 	final static double MUTATION_TOLERANCE = 0.2;
 	final static double NEARBY_FACTOR = 60.0;
@@ -123,21 +126,11 @@ public abstract class Animal implements Entity, AnimalInfo {
 	protected void setState(State state) {
 		this.state = state;
 		switch(state) {
-		case NORMAL:
-			setNormalStateAction();
-			break;
-		case MATE:
-			setMateStateAction();
-			break;
-		case HUNGER:
-			setHungerStateAction();
-			break;
-		case DANGER:
-			setDangerStateAction();
-			break;
-		case DEAD:
-			setDeadStateAction();
-			break;
+			case NORMAL: setNormalStateAction(); break;
+			case MATE: setMateStateAction(); break;
+			case HUNGER: setHungerStateAction(); break;
+			case DANGER: setDangerStateAction(); break;
+			case DEAD: setDeadStateAction(); break;
 		}
 	}
 	
@@ -149,19 +142,11 @@ public abstract class Animal implements Entity, AnimalInfo {
 	public void update(double dt) {
 		if(state != State.DEAD) {
 			switch(state) {
-			case NORMAL:
-				normalState(dt);
-				break;
-			case DANGER:	
-				dangerState(dt);
-				break;
-			case HUNGER:	
-				hungerState(dt);
-				break;
-			case MATE:
-				mateState(dt);
-				break;
-			default:
+				case NORMAL: normalState(dt); break;
+				case DANGER: dangerState(dt); break;
+				case HUNGER: hungerState(dt); break;
+				case MATE: mateState(dt); break;
+				default:
 			}
 			if(!pos.isValid(regionManager.getWidth(), regionManager.getHeight())) {
 				pos = pos.adjust(regionManager.getWidth(), regionManager.getHeight());

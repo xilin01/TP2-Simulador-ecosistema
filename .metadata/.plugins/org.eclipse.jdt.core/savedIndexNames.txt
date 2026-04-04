@@ -1,7 +1,0 @@
-INDEX VERSION 1.134+C:\Users\xiang\Downloads\TP2\Simulador-ecosistema\.metadata\.plugins\org.eclipse.jdt.core
-2410832772.index
-1095918346.index
-1411219262.index
-1066598596.index
-1594265834.index
-1865797976.index

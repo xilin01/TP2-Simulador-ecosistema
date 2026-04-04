@@ -26,7 +26,7 @@ public class SheepBuilder extends AnimalBuilder {
 	@Override
 	protected Sheep createInstance(JSONObject data) {
 		if(data == null) throw new IllegalArgumentException("Invalid data for createInstance in SheepBuilder");
-		return (Sheep) super.createInstance(data);
+		return (Sheep)super.createInstance(data);
 	}
 	
 	@Override

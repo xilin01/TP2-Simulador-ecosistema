@@ -29,11 +29,11 @@ class StatusBar extends JPanel implements EcoSysObserver {
 		super.setLayout(new FlowLayout(FlowLayout.LEFT));
 		super.setBorder(BorderFactory.createBevelBorder(1));
 		
-		timeLabel = new JLabel("Time: 0.000");
+		timeLabel = new JLabel("Time: 0.000   ");
 		super.add(timeLabel);
 		addSeparator();
 
-		totalAnimalsLabel = new JLabel("Total Animals: 0");
+		totalAnimalsLabel = new JLabel("Total Animals: 0   ");
 		super.add(totalAnimalsLabel);
 		addSeparator();
 
@@ -55,9 +55,9 @@ class StatusBar extends JPanel implements EcoSysObserver {
 	
 	private void update(double time, MapInfo map, List<AnimalInfo> animals) {
 		SwingUtilities.invokeLater(() -> {
-			timeLabel.setText(String.format("Time: %.3f", time));
-			totalAnimalsLabel.setText("Total Animals: " + animals.size());
-			dimensionLabel.setText("Dimension: " + map.getWidth() + "x" + map.getHeight() + " " + map.getRows() + "x" + map.getCols());
+			timeLabel.setText(String.format("Time: %.3f   ", time));
+			totalAnimalsLabel.setText("Total Animals: " + animals.size() + "   ");
+			dimensionLabel.setText("Dimension: " + map.getWidth() + "x" + map.getHeight() + " " + map.getCols() + "x" + map.getRows());
 		});
 	}
 

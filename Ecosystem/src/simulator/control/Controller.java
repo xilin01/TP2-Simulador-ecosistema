@@ -61,7 +61,7 @@ public class Controller {
 	public void run(double t, double dt, boolean sv, OutputStream out) {
 		SimpleObjectViewer view = null;
 		
-		if (sv) {  
+		if(sv) {  
 		   MapInfo m = sim.getMapInfo();
 		   
 		   view = new SimpleObjectViewer("[ECOSYSTEM]", m.getWidth(), m.getHeight(), m.getCols(), m.getRows());
@@ -70,17 +70,17 @@ public class Controller {
 		JSONObject jo = new JSONObject().put("in", sim.asJSON());
 		while(sim.getTime() <= t) {
 			sim.advance(dt);
-			if (sv) view.update(toAnimalsInfo(sim.getAnimals()), sim.getTime(), dt);
+			if(sv) view.update(toAnimalsInfo(sim.getAnimals()), sim.getTime(), dt);
 		}
 		PrintStream p = new PrintStream(out);
 		p.println(jo.put("out", sim.asJSON()).toString(2));	
-		if (sv) view.close();
+		if(sv) view.close();
 	}
 	
 	private List<ObjInfo> toAnimalsInfo(List<? extends AnimalInfo> animals) {
 		List<ObjInfo> ol = new ArrayList<>(animals.size());
 		
-		for (AnimalInfo a: animals) ol.add(new ObjInfo(a.getGeneticCode(), (int)a.getPosition().getX(), (int)a.getPosition().getY(), (int)Math.round(a.getAge())+2));
+		for(AnimalInfo a: animals) ol.add(new ObjInfo(a.getGeneticCode(), (int)a.getPosition().getX(), (int)a.getPosition().getY(), (int)Math.round(a.getAge())+2));
 		return ol;
 	}
 	

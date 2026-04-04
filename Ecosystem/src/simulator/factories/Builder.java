@@ -7,7 +7,7 @@ public abstract class Builder<T> {
 	private String desc;
 
 	public Builder(String typeTag, String desc) {
-		if (typeTag == null || desc == null || typeTag.isBlank() || desc.isBlank()) throw new IllegalArgumentException("Invalid arguments for Builder builder");
+		if(typeTag == null || desc == null || typeTag.isBlank() || desc.isBlank()) throw new IllegalArgumentException("Invalid arguments for Builder builder");
 		this.typeTag = typeTag;  
 		this.desc = desc;
 	}

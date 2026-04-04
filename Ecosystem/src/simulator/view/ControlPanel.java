@@ -17,6 +17,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import icons.ICONS;
 import simulator.control.Controller;
 import simulator.launcher.Main;
 
@@ -76,10 +77,10 @@ class ControlPanel extends JPanel {
 	}
 	
 	private void initOpenButton() {
-		openButton = new JButton(new ImageIcon("resources/icons/open.png"));
+		openButton = new JButton(new ImageIcon(ICONS.class.getResource("open.png")));
 		openButton.setToolTipText("Load an input file into the simulator");
 		openButton.addActionListener(e -> {
-			if (fileChooser.showOpenDialog(ViewUtils.getWindow(this)) == JFileChooser.APPROVE_OPTION) {
+			if(fileChooser.showOpenDialog(ViewUtils.getWindow(this)) == JFileChooser.APPROVE_OPTION) {
 				try {
 					JSONObject jo = new JSONObject(new JSONTokener((InputStream)new FileInputStream(fileChooser.getSelectedFile())));
 					
@@ -95,21 +96,21 @@ class ControlPanel extends JPanel {
 	}
 	
 	private void initViewerButton() {
-		viewerButton = new JButton(new ImageIcon("resources/icons/viewer.png"));
+		viewerButton = new JButton(new ImageIcon(ICONS.class.getResource("viewer.png")));
 		viewerButton.setToolTipText("Map Viewer");
 		viewerButton.addActionListener(e -> new MapWindow(ViewUtils.getWindow(this), ctrl));
 		toolBar.add(viewerButton);
 	}
 	
 	private void initRegionsButton() {
-		regionsButton = new JButton(new ImageIcon("resources/icons/regions.png"));
+		regionsButton = new JButton(new ImageIcon(ICONS.class.getResource("regions.png")));
 		regionsButton.setToolTipText("Change Regions");
 		regionsButton.addActionListener(e -> changeRegionsDialog.open(ViewUtils.getWindow(this)));
 		toolBar.add(regionsButton);
 	}
 	
 	private void initRunButton() {
-		runButton = new JButton(new ImageIcon("resources/icons/run.png"));
+		runButton = new JButton(new ImageIcon(ICONS.class.getResource("run.png")));
 		runButton.setToolTipText("Run the simulator");
 		runButton.addActionListener(e -> {
 			setButtonsEnabled(false);
@@ -132,12 +133,13 @@ class ControlPanel extends JPanel {
 	}
 
 	private void runSim(int n, double dt) {
-		if (n > 0 && !stopped) {
+		if(n > 0 && !stopped) {
 			try {
 				ctrl.advance(dt);
+				Thread.sleep(20);
 				SwingUtilities.invokeLater(() -> runSim(n - 1, dt));
 			} 
-			catch (Exception e) {
+			catch(Exception e) {
 				ViewUtils.showErrorMsg(e.getMessage());
 				setButtonsEnabled(true);
 				stopped = true;
@@ -150,14 +152,14 @@ class ControlPanel extends JPanel {
 	}
 	
 	private void initStopButton() {
-		stopButton = new JButton(new ImageIcon("resources/icons/stop.png"));
+		stopButton = new JButton(new ImageIcon(ICONS.class.getResource("stop.png")));
 		stopButton.setToolTipText("Stop the simulator");
 		stopButton.addActionListener(e -> stopped = true);
 		toolBar.add(stopButton);
 	}
 	
 	private void initQuitButton() {
-		quitButton = new JButton(new ImageIcon("resources/icons/exit.png"));
+		quitButton = new JButton(new ImageIcon(ICONS.class.getResource("exit.png")));
 		quitButton.setToolTipText("Exit");
 		quitButton.addActionListener(e -> ViewUtils.quit(this));
 		toolBar.add(quitButton);

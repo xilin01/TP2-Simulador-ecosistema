@@ -81,8 +81,8 @@ public class RegionManager implements AnimalMapView {
 	}
 	
 	private Region findRegion(Vector2D pos) {
-		int row = (int) Utils.constrainValueInRange(pos.getX() / regionWidth, 0, rows - 1);
-		int col = (int) Utils.constrainValueInRange(pos.getY() / regionHeight, 0, cols - 1);
+		int row = (int)Utils.constrainValueInRange(pos.getX() / regionWidth, 0, rows - 1);
+		int col = (int)Utils.constrainValueInRange(pos.getY() / regionHeight, 0, cols - 1);
 
 		return regions[row][col];
 	}
@@ -115,10 +115,10 @@ public class RegionManager implements AnimalMapView {
 	@Override
 	public List<Animal> getAnimalsInRange(Animal a, Predicate<Animal> filter) {
 		List<Animal> aux = new ArrayList<>();
-		int row1 = (int) Utils.constrainValueInRange((a.getPosition().getX() - a.getSightRange()) / regionWidth, 0, rows - 1);
-		int row2 = (int) Utils.constrainValueInRange((a.getPosition().getX() + a.getSightRange()) / regionWidth, 0, rows - 1);
-		int col1 = (int) Utils.constrainValueInRange((a.getPosition().getY() - a.getSightRange()) / regionHeight, 0, cols - 1);
-		int col2 = (int) Utils.constrainValueInRange((a.getPosition().getY() + a.getSightRange()) / regionHeight, 0, cols - 1);
+		int row1 = (int)Utils.constrainValueInRange((a.getPosition().getX() - a.getSightRange()) / regionWidth, 0, rows - 1);
+		int row2 = (int)Utils.constrainValueInRange((a.getPosition().getX() + a.getSightRange()) / regionWidth, 0, rows - 1);
+		int col1 = (int)Utils.constrainValueInRange((a.getPosition().getY() - a.getSightRange()) / regionHeight, 0, cols - 1);
+		int col2 = (int)Utils.constrainValueInRange((a.getPosition().getY() + a.getSightRange()) / regionHeight, 0, cols - 1);
 		
 		for(int i = row1; i <= row2; i++) {
 			for(int j = col1; j <= col2; j++) {
@@ -146,7 +146,7 @@ public class RegionManager implements AnimalMapView {
 				RegionData regionData = new RegionData(currentRow, currentCol, regions[currentRow][currentCol]);
 				
 				currentCol++;
-				if (currentCol >= cols) {
+				if(currentCol >= cols) {
 					currentCol = 0;
 					currentRow++;
 				}

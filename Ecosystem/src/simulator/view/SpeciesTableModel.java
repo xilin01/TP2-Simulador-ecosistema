@@ -1,10 +1,13 @@
 package simulator.view;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
-
 import simulator.control.Controller;
+import simulator.model.Animal.State;
 import simulator.model.AnimalInfo;
 import simulator.model.EcoSysObserver;
 import simulator.model.MapInfo;
@@ -12,61 +15,98 @@ import simulator.model.RegionInfo;
 
 @SuppressWarnings("serial")
 class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
+	private String[] columnNames;
+	private List<String> speciesList;
+	private Map<String, Map<State, Integer>> speciesData;
 
-	  // TODO definir atributos necesarios
-
-	  SpeciesTableModel(Controller ctrl) {  
-	    // TODO inicializar estructuras de datos correspondientes  
-	    // TODO registrar this como observador  
-	  }  
-	  // TODO el resto de métodos van aquí …  
-
-	  @Override
-	  public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	  }
-
-	  @Override
-	  public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	  }
-
-	  @Override
-	  public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
-	  }
-
-	  @Override
-	  public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
+	SpeciesTableModel(Controller ctrl) {
+		State[] states = State.values();
 		
-	  }
-
-	  @Override
-	  public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
-		// TODO Auto-generated method stub
-		
-	  }
-
-	  @Override
-	  public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		// TODO Auto-generated method stub
-		
-	  }
-
-	  @Override
-	  public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		// TODO Auto-generated method stub
-		
-	  }
-
-	  @Override
-	  public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
-		// TODO Auto-generated method stub
-		
-	  }
+		columnNames = new String[states.length + 1];
+		columnNames[0] = "Species";
+		for(int i = 0; i < states.length; i++) columnNames[i + 1] = states[i].toString();
+		speciesList = new ArrayList<>();
+		speciesData = new HashMap<>();
+		ctrl.addObserver(this);
+	}
+	
+	@Override
+	public int getRowCount() {
+		return speciesList.size();
 	}
 
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
+	}
+
+	@Override
+	public String getColumnName(int col) {
+		return columnNames[col];
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		String species = speciesList.get(rowIndex);
+		Map<State, Integer> statesCount = speciesData.get(species);
+
+		switch(columnIndex) {
+			case 0: return species;
+			default: return statesCount.getOrDefault(State.values()[columnIndex - 1], 0);
+		}
+	}
+
+	@Override
+	public void onRegister(double time, MapInfo map, List<AnimalInfo> animals) {
+		update(animals);
+	}
+	
+	private void update(List<AnimalInfo> animals) {
+		SwingUtilities.invokeLater(() -> {
+			speciesList.clear();
+			speciesData.clear();
+			for(AnimalInfo a: animals) update(a);
+			super.fireTableDataChanged();
+		});
+	}
+	
+	private void update(AnimalInfo a) {
+		String species = a.getGeneticCode();
+		State state = a.getState();
+		
+		if(!speciesData.containsKey(species)) {
+			speciesList.add(species);
+			speciesData.put(species, new HashMap<>());
+		}
+		Map<State, Integer> statesCount = speciesData.get(species);
+		statesCount.put(state, statesCount.getOrDefault(state, 0) + 1);
+	}
+
+	@Override
+	public void onReset(double time, MapInfo map, List<AnimalInfo> animals) {
+		update(animals);
+	}
+
+	@Override
+	public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
+		SwingUtilities.invokeLater(() -> {
+			update(a);
+			int i = 0;
+			boolean found = false;
+			while(i < speciesList.size() && !found) {
+				if(a.getGeneticCode() == speciesList.get(i)) found = true;
+				else i++;
+			}
+			super.fireTableRowsUpdated(i, i);
+		});
+	}
+
+	@Override
+	public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
+	}
+
+	@Override
+	public void onAdvance(double time, MapInfo map, List<AnimalInfo> animals, double dt) {
+		update(animals);
+	}
+}

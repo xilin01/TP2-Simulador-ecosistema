@@ -74,7 +74,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver> {
 		List<Animal> aux = new ArrayList<>();
 		
 		for(Animal a: animals) {
-			if(a.getState() == State.DEAD) regionManager.unregisterAnimal(a);
+			if(a.getState() == Animal.State.DEAD) regionManager.unregisterAnimal(a);
 			else aux.add(a);
 		}
 		animals = aux;

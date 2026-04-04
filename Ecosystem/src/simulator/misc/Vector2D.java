@@ -64,14 +64,14 @@ public class Vector2D {
 
 	// Return the corresponding unit vector
 	public Vector2D direction() {
-		if (magnitude() > 0.0) return scale(1.0 / magnitude());
+		if(magnitude() > 0.0) return scale(1.0 / magnitude());
 		else return new Vector2D(this);
 	}
 
 	public Vector2D rotate(int deg) {
 		double degree = deg;
 
-		assert (degree >= -180.0 && degree <= 180.0);
+		assert(degree >= -180.0 && degree <= 180.0);
 		double angle = degree * Math.PI / 180.0;
 		double sine = Math.sin(angle);
 		double cosine = Math.cos(angle);
@@ -96,11 +96,11 @@ public class Vector2D {
 	}
 	
 	public static Vector2D getRandomVector(double minX, double maxX, double minY, double maxY) {
-		assert (maxX >= minX && maxY >= minY);
+		assert(maxX >= minX && maxY >= minY);
 		double x = minX + Utils.RAND.nextDouble(maxX - minX);
 		double y = minY + Utils.RAND.nextDouble(maxY - minY);
-		assert (x >= minX && x <= maxX);
-		assert (y >= minY && y <= maxY);
+		assert(x >= minX && x <= maxX);
+		assert(y >= minY && y <= maxY);
 		return new Vector2D(x, y);
 	}
 	
@@ -115,10 +115,10 @@ public class Vector2D {
 	public Vector2D adjust(double width, double height) {
 		double auxX = x, auxY = y;
 		
-		while (auxX >= width) auxX -= width;  
-		while (auxX < 0) auxX += width;  
-		while (auxY >= height) auxY -= height;  
-		while (auxY < 0) auxY += height;
+		while(auxX >= width) auxX -= width;  
+		while(auxX < 0) auxX += width;  
+		while(auxY >= height) auxY -= height;  
+		while(auxY < 0) auxY += height;
 		return new Vector2D(auxX, auxY);
 	}
 
@@ -137,20 +137,20 @@ public class Vector2D {
 		long temp;
 		
 		temp = Double.doubleToLongBits(x);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (int)(temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(y);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (int)(temp ^ (temp >>> 32));
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if(this == obj) return true;
+		if(obj == null) return false;
+		if(getClass() != obj.getClass()) return false;
 		Vector2D other = (Vector2D) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) return false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) return false;
+		if(Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) return false;
+		if(Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) return false;
 		return true;
 	}
 
