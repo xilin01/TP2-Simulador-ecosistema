@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import simulator.control.Controller;
-import simulator.misc.Utils;
 import simulator.model.AnimalInfo;
 import simulator.model.Animal.Diet;
 import simulator.model.EcoSysObserver;
@@ -17,7 +16,7 @@ import simulator.model.RegionInfo;
 
 @SuppressWarnings("serial")
 class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
-	private static class RegionRowData {
+	private class RegionRowData {
 		private int row;
 		private int col;
 		private String desc;
@@ -99,42 +98,12 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 
 	@Override
 	public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
-		SwingUtilities.invokeLater(() -> {
-			int row = (int)Utils.constrainValueInRange(a.getPosition().getX() / map.getRegionWidth(), 0, map.getRows() - 1);
-			int col = (int)Utils.constrainValueInRange(a.getPosition().getY() / map.getRegionHeight(), 0, map.getCols() - 1);
-			int i = 0;
-			boolean found = false;
-			
-			while(i < tableData.size() && !found) {
-				RegionRowData rowData = tableData.get(i);
-				
-				if(rowData.row == row && rowData.col == col) {
-					found = true;
-					rowData.dietsCount.put(a.getDiet(), rowData.dietsCount.get(a.getDiet()) + 1);
-				}
-				else i++;
-			}
-			super.fireTableRowsUpdated(i, i);
-		});
+		updateData(map);
 	}
 
 	@Override
 	public void onRegionSet(int row, int col, MapInfo map, RegionInfo r) {
-		SwingUtilities.invokeLater(() -> {
-			int i = 0;
-			boolean found = false;
-			
-			while(i < tableData.size() && !found) {
-				RegionRowData rowData = tableData.get(i);
-				
-				if(rowData.row == row && rowData.col == col) {
-					found = true;
-					rowData.desc = r.toString();
-				}
-				else i++;
-			}
-			super.fireTableRowsUpdated(i, i);
-		});
+		updateData(map);
 	}
 
 	@Override

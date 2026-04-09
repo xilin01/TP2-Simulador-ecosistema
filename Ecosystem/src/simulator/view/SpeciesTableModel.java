@@ -91,13 +91,7 @@ class SpeciesTableModel extends AbstractTableModel implements EcoSysObserver {
 	public void onAnimalAdded(double time, MapInfo map, List<AnimalInfo> animals, AnimalInfo a) {
 		SwingUtilities.invokeLater(() -> {
 			update(a);
-			int i = 0;
-			boolean found = false;
-			while(i < speciesList.size() && !found) {
-				if(a.getGeneticCode() == speciesList.get(i)) found = true;
-				else i++;
-			}
-			super.fireTableRowsUpdated(i, i);
+			super.fireTableDataChanged();
 		});
 	}
 

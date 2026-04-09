@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -65,10 +66,12 @@ class ControlPanel extends JPanel {
 		toolBar.add(new JLabel("Steps:"));
 		stepSpinner = new JSpinner(new SpinnerNumberModel(10000, 1, 10000, 100));
 		stepSpinner.setToolTipText("Simulation steps to run: 1-10000");
+		stepSpinner.setMaximumSize(new Dimension(100, 50));
 		toolBar.add(stepSpinner);
 		toolBar.add(new JLabel("Delta-Time:"));
 		dtField = new JTextField(Main.DEFAULT_DELTA_TIME.toString(), 5);
 		dtField.setToolTipText("Real time (seconds) corresponding to a step");
+		dtField.setMaximumSize(new Dimension(75, 50));
 		toolBar.add(dtField);
 		toolBar.add(Box.createGlue()); // This aligns the quit button to the right
 		toolBar.addSeparator();
