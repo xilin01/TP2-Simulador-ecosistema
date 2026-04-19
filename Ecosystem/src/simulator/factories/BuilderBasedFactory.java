@@ -1,6 +1,6 @@
 package simulator.factories;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +39,6 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 
 	@Override  
 	public List<JSONObject> getInfo() {
-		return Collections.unmodifiableList(buildersInfo);
+		return new ArrayList<>(buildersInfo);
 	}
 }

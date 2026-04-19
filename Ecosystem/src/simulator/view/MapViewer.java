@@ -126,26 +126,25 @@ public class MapViewer extends AbstractMapViewer {
 	}
 	
 	private boolean visible(AnimalInfo a) {
-		if(currState == null || a.getState() == currState) return true;
-		else return false;
+		return currState == null || a.getState() == currState;
 	}
-
+	
 	private void drawInfo(Graphics2D g, Double time) {
-		int x = rWidth / 4, y = height - rHeight / 2;
+		int x = 10, y = height - 20, line = 20;
 		
 		if(currState != null) {
 			g.setColor(Color.BLUE);
 			drawStringWithRect(g, x, y, "State: " + currState.toString());
-			y -= 11 * rHeight / 20;
+			y -= line;
 		}
 		g.setColor(Color.PINK);
 		drawStringWithRect(g, x, y, String.format("Time: %.3f", time));
-		y -= 11 * rHeight / 20;
+		y -= line;
 		for(Entry<String, SpeciesInfo> e: kindsInfo.entrySet()) {
 			g.setColor(e.getValue().color);
 			drawStringWithRect(g, x, y, e.getKey() + ": " + e.getValue().count);
-			y -= 11 * rHeight / 20;
 			e.getValue().count = 0;
+			y -= line;
 		}
 	}
 	
@@ -157,7 +156,7 @@ public class MapViewer extends AbstractMapViewer {
 	}
 	
 	private void drawHelp(Graphics2D g) {
-		int x = rWidth / 4, y = rHeight / 2;
+		int x = 10, y = 20, line = 15;;
 		String[] lines = {
 			"h: toggle help",
 			"s: show animals of a specific state"
@@ -166,7 +165,7 @@ public class MapViewer extends AbstractMapViewer {
 		g.setColor(Color.RED);
 		for(String s: lines) {
 			g.drawString(s, x, y);
-			y += rHeight / 3;
+			y += line;
 		}
 	}
 

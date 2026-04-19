@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -17,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.control.Controller;
@@ -67,11 +70,23 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 			}
 		};
 		dataTableModel.setColumnIdentifiers(headers);
-		JTable table = new JTable(dataTableModel);
+		JTable table = new JTable(dataTableModel) {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) { // We override prepareRenderer to resize columns to fit to content
+				Component component = super.prepareRenderer(renderer, row, column);
+				
+				int rendererWidth = component.getPreferredSize().width;
+				TableColumn tableColumn = getColumnModel().getColumn(column);
+				tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+				return component;
+			}
+		};
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.LEFT);
 		mainPanel.add(new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
-		JPanel comboPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel comboPanel = new JPanel();
 		comboPanel.add(new JLabel("Region type:"));
 		regionsModel = new DefaultComboBoxModel<>();
 		for(JSONObject jo: regionsInfo) regionsModel.addElement(jo.getString("type"));
@@ -140,8 +155,8 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 		}
 		spec.put("data", data);
 		JSONObject aux = new JSONObject();
-		aux.put("row", new JSONArray().put(Integer.parseInt((String)fromRowModel.getSelectedItem())).put(Integer.parseInt((String)toRowModel.getSelectedItem())));
-		aux.put("col", new JSONArray().put(Integer.parseInt((String)fromColModel.getSelectedItem())).put(Integer.parseInt((String)toColModel.getSelectedItem())));
+		aux.put("row", new JSONArray().put(fromRowModel.getSelectedItem()).put(toRowModel.getSelectedItem()));
+		aux.put("col", new JSONArray().put(fromColModel.getSelectedItem()).put(toColModel.getSelectedItem()));
 		aux.put("spec", spec);
 		return new JSONObject().put("regions", new JSONArray().put(aux));
 	}

@@ -51,7 +51,7 @@ class JSONBuilderDialog extends JDialog {
 		_dataTableModel = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return column != 0;
+				return column != 0;	
 			}
 		};
 		_dataTableModel.setColumnIdentifiers(_header);

@@ -6,7 +6,7 @@ import java.awt.Frame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-class ViewUtils {
+public class ViewUtils {
 	// Return the frame to which 'c' belongs
 	static Frame getWindow(Component c) {
 		Frame w = null;
@@ -19,7 +19,7 @@ class ViewUtils {
 	}
 
 	// Opens a dialog box to show an error
-	static void showErrorMsg(String msg) {
+	public static void showErrorMsg(String msg) {
 		showErrorMsg(null, msg);
 	}
 

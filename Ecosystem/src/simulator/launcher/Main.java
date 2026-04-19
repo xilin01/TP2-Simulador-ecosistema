@@ -34,6 +34,7 @@ import simulator.model.Region;
 import simulator.model.SelectionStrategy;
 import simulator.model.Simulator;
 import simulator.view.MainWindow;
+import simulator.view.ViewUtils;
 
 public class Main {
 	private enum ExecMode {
@@ -104,7 +105,7 @@ public class Main {
 			}
 		}
 		catch(ParseException e) {
-			System.err.println(e.getLocalizedMessage());
+			ViewUtils.showErrorMsg(e.getMessage());
 			System.exit(1);
 		}
 	}
@@ -230,9 +231,7 @@ public class Main {
 			start(args);
 		}
 		catch(Exception e) {
-			System.err.println("Something went wrong...");
-			System.err.println();
-			e.printStackTrace();
+			ViewUtils.showErrorMsg(e.getMessage());
 		}
 	}
 }

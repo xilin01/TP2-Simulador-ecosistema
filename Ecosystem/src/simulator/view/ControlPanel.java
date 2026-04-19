@@ -1,6 +1,7 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
@@ -116,7 +117,7 @@ class ControlPanel extends JPanel {
 		runButton = new JButton(new ImageIcon(ICONS.class.getResource("run.png")));
 		runButton.setToolTipText("Run the simulator");
 		runButton.addActionListener(e -> {
-			setButtonsEnabled(false);
+			setComponentsEnabled(false);
 			stopButton.setEnabled(true);
 			stopped = false;
 			runSim((Integer)stepSpinner.getValue(), Double.parseDouble(dtField.getText()));
@@ -124,15 +125,8 @@ class ControlPanel extends JPanel {
 		toolBar.add(runButton);
 	}
 	
-	private void setButtonsEnabled(boolean enabled) {
-		openButton.setEnabled(enabled);
-		viewerButton.setEnabled(enabled);
-		regionsButton.setEnabled(enabled);
-		runButton.setEnabled(enabled);
-		stopButton.setEnabled(enabled);
-		stepSpinner.setEnabled(enabled);
-		dtField.setEnabled(enabled);
-		quitButton.setEnabled(enabled);
+	private void setComponentsEnabled(boolean enabled) {
+		for(Component component: toolBar.getComponents()) component.setEnabled(enabled);
 	}
 
 	private void runSim(int n, double dt) {
@@ -144,12 +138,12 @@ class ControlPanel extends JPanel {
 			} 
 			catch(Exception e) {
 				ViewUtils.showErrorMsg(e.getMessage());
-				setButtonsEnabled(true);
+				setComponentsEnabled(true);
 				stopped = true;
 			}
 		} 
 		else {
-			setButtonsEnabled(true);
+			setComponentsEnabled(true);
 			stopped = true;
 		}
 	}

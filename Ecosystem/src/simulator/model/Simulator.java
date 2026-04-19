@@ -1,7 +1,6 @@
 package simulator.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.json.JSONObject;
 import simulator.factories.Factory;
@@ -50,7 +49,7 @@ public class Simulator implements JSONable, Observable<EcoSysObserver> {
 	}
 	
 	public List<? extends AnimalInfo> getAnimals() {
-		return Collections.unmodifiableList(animals);
+		return new ArrayList<>(animals);
 	}
 	
 	public double getTime() {
