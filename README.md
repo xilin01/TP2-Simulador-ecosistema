@@ -4,10 +4,6 @@ Simulador de un ecosistema de **ovejas y lobos** desarrollado en **Java 21** con
 
 ![Simulador](docs/simulador.png)
 
-<!-- CAPTURA 1: ventana principal con una simulación en marcha. Quita el comentario cuando exista la imagen:
-![Ventana principal del simulador](docs/ventana-principal.png)
--->
-
 ---
 
 ## Características
@@ -40,14 +36,6 @@ Simulador de un ecosistema de **ovejas y lobos** desarrollado en **Java 21** con
 
 ![Cambiar regiones](docs/cambiar-regiones.png)![Visor mapa](docs/visor-mapa.gif)
 
-<!-- CAPTURA 2: visor del mapa con ovejas y lobos moviéndose (mejor un GIF de 5-10 s):
-![Visor del mapa](docs/visor-mapa.gif)
--->
-
-<!-- CAPTURA 3: diálogo Change Regions abierto:
-![Diálogo Change Regions](docs/cambiar-regiones.png)
--->
-
 ---
 
 ## Arquitectura y patrones de diseño
@@ -58,10 +46,6 @@ Simulador de un ecosistema de **ovejas y lobos** desarrollado en **Java 21** con
 - **Strategy**: `SelectionStrategy` (`SelectFirst`, `SelectClosest`, `SelectYoungest`) decide a qué animal perseguir, de cuál huir o con cuál aparearse.
 - **Template Method**: `Animal` define el ciclo de actualización y `Sheep` y `Wolf` implementan el comportamiento de cada estado.
 - **Interfaces de solo lectura** (`AnimalInfo`, `MapInfo`, `RegionInfo`): la vista consulta el modelo sin poder modificarlo.
-
-<!-- CAPTURA 4 (opcional): diagrama de clases del modelo:
-![Diagrama de clases](docs/diagrama-clases.png)
--->
 
 ---
 
