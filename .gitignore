@@ -2,3 +2,6 @@
 bin/
 *.class
 *.log
+
+# Salidas de pruebas del modo batch
+Ecosystem/resources/tmp/

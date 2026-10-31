@@ -30,10 +30,11 @@ class MapWindow extends JFrame implements EcoSysObserver {
 
 	private void intiGUI() {
 		JPanel mainPanel = new JPanel(new BorderLayout());
-
 		super.setContentPane(mainPanel);
+		
 		viewer = new MapViewer();
 		mainPanel.add(viewer, BorderLayout.CENTER);
+		
 		super.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

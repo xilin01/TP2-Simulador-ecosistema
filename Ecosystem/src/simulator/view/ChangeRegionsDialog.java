@@ -76,9 +76,9 @@ class ChangeRegionsDialog extends JDialog implements EcoSysObserver {
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) { // We override prepareRenderer to resize columns to fit to content
 				Component component = super.prepareRenderer(renderer, row, column);
-				
 				int rendererWidth = component.getPreferredSize().width;
 				TableColumn tableColumn = getColumnModel().getColumn(column);
+				
 				tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
 				return component;
 			}

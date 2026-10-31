@@ -1,0 +1,5 @@
+# Normaliza saltos de línea (evita diffs enteros por CRLF/LF en Windows)
+* text=auto
+*.jar binary
+*.png binary
+*.gif binary

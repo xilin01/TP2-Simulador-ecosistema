@@ -90,8 +90,8 @@ public class Main {
 			
 			parseDeltaTimeOption(line);
 			parseHelpOption(line, cmdLineOptions);
-			parseInFileOption(line);
 			parseModeOption(line);
+			parseInFileOption(line);
 			parseOutFileOption(line);
 			parseSimpleViewerOption(line);
 			parseTimeOption(line);
@@ -220,7 +220,7 @@ public class Main {
 		initFactories();
 		parseArgs(args);
 		switch(mode) {
-			case BATCH: startBatchMode(); break;
+			case BATCH: startBatchMode(); break; // -i resources/examples/ex5.json -o resources/tmp/myout.jso -t 60.0 -dt 0.03 -sv
 			case GUI: startGUIMode(); break;
 		}
 	}

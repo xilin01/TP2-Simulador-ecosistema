@@ -27,7 +27,7 @@ class RegionsTableModel extends AbstractTableModel implements EcoSysObserver {
 			this.col = col;
 			this.desc = desc;
 			dietsCount = new HashMap<>();
-			for(Diet d: Diet.values()) dietsCount.put(d, 0);
+			for(Diet diet: Diet.values()) dietsCount.put(diet, 0);
 		}
 	}
 	

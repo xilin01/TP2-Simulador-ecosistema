@@ -117,10 +117,15 @@ class ControlPanel extends JPanel {
 		runButton = new JButton(new ImageIcon(ICONS.class.getResource("run.png")));
 		runButton.setToolTipText("Run the simulator");
 		runButton.addActionListener(e -> {
-			setComponentsEnabled(false);
-			stopButton.setEnabled(true);
-			stopped = false;
-			runSim((Integer)stepSpinner.getValue(), Double.parseDouble(dtField.getText()));
+			try {
+				setComponentsEnabled(false);
+				stopButton.setEnabled(true);
+				stopped = false;
+				runSim((Integer)stepSpinner.getValue(), Double.parseDouble(dtField.getText()));
+			}
+			catch(Exception ex) {
+				ViewUtils.showErrorMsg(ex.getMessage());
+			}
 		});
 		toolBar.add(runButton);
 	}

@@ -19,10 +19,10 @@ public class DynamicSupplyRegionBuilder extends Builder<Region> {
 		jo.put("factor", "food increase factor (optional, default 2.0)");
 		jo.put("food", "initial amount of food (optional, default 100.0)");
 	}
-
+	
 	@Override
 	protected DynamicSupplyRegion createInstance(JSONObject data) {
-		if(data == null || data.optDouble("food", INIT_FOOD) < 0 || data.optDouble("factor", FACTOR) < 0) 
+		if(data == null || (data.has("food") && data.getDouble("food") < 0) || (data.has("factor") && data.getDouble("factor") < 0)) 
 			throw new IllegalArgumentException("Invalid data for createInstance in DynamicSupplyRegionBuilder");
 		return new DynamicSupplyRegion(data.optDouble("food", INIT_FOOD), data.optDouble("factor", FACTOR));
 	}

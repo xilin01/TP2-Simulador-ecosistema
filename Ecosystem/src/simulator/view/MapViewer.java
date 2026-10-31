@@ -71,7 +71,7 @@ public class MapViewer extends AbstractMapViewer {
 						}
 						repaint();
 						break;
-					default:
+					default: break;
 				}
 			}
 		});

@@ -146,7 +146,7 @@ public abstract class Animal implements Entity, AnimalInfo {
 				case DANGER: dangerState(dt); break;
 				case HUNGER: hungerState(dt); break;
 				case MATE: mateState(dt); break;
-				default:
+				default: break;
 			}
 			if(!pos.isValid(regionManager.getWidth(), regionManager.getHeight())) {
 				pos = pos.adjust(regionManager.getWidth(), regionManager.getHeight());
